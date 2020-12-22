@@ -1,0 +1,16 @@
+WITH cte_date AS (
+    SELECT *,
+ case 
+	when len(mdate) = 12 then case when substring(mdate,2,len(mdate)-2) like '%-%' then substring(mdate,2,len(mdate)-2) else '9999-01-01' end
+	when len(mdate) > 12 then '9999-01-01'
+	when len(mdate) < 10 then '9990-02-01'
+    when len(mdate) IS NULL then '9990-03-01'
+	when mdate='"77|Fagin"' then '9990-03-01'
+    when len(mdate) > 10 AND len(mdate) < 12 then '9990-04-01'
+	else mdate end as [DimDate.Date]
+
+from [DBLP].[dbo].[StaggingTable]
+)
+SELECT
+*
+FROM cte_date

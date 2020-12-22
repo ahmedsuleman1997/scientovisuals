@@ -1,0 +1,24 @@
+WITH cte_date AS (
+    SELECT DISTINCT
+ case 
+	when len(mdate) = 12 then case when substring(mdate,2,len(mdate)-2) like '%-%' then substring(mdate,2,len(mdate)-2) else '9999-01-01' end
+	when len(mdate) > 12 then '9999-01-01'
+	when len(mdate) < 10 then '9990-02-01'
+    when len(mdate) IS NULL then '9990-03-01'
+	when mdate='"77|Fagin"' then '9990-03-01'
+    when len(mdate) > 10 AND len(mdate) < 12 then '9990-04-01'
+else mdate  end as date  
+
+from [DBLP].[dbo].[StaggingTable]
+)
+
+SELECT 
+CONVERT(NVARCHAR(1000),YEAR(date)) AS [DimDate.Year],
+CONVERT(NVARCHAR(1000),DATENAME("QQ",date)) AS [DimDate.Quarter],
+CONVERT(NVARCHAR(1000),DATENAME("WW",date)) AS [DimDate.Week],
+CONVERT(NVARCHAR(1000),MONTH(date)) AS [DimDate.Month No],
+CONVERT(NVARCHAR(1000),DATENAME("M",date)) AS [DimDate.Month Name],
+CONVERT(NVARCHAR(1000),DATENAME("dd",date)) AS [DimDate.Day],
+CONVERT(NVARCHAR(1000),DATENAME("dw",date)) AS [DimDate.Day Name],
+CONVERT(NVARCHAR(1000),date) AS [DimDate.Date]
+FROM cte_date

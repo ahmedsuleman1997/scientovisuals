@@ -1,0 +1,5 @@
+SELECT        ID AS blogID, Author, AuthorBibtex, Cite, CrossRef, Editor, EE, [Key], MDate, Note, NoteLabel, NoteType, PublisherType, Title, URL, URLType, [Year], NULL AS ArticleID, NULL AS AuthorAux, NULL AS AuthorOrcid, NULL 
+                         AS BookTitle, NULL AS CDate, NULL AS CDRom, NULL AS CiteLabel, NULL AS EditorOrcid, NULL AS EEType, NULL AS I, NULL AS Journal, NULL AS Month, NULL AS Number, NULL AS Pages, NULL AS Publisher, NULL 
+                         AS Sub, NULL AS Sup, NULL AS TitleBibtex, NULL AS TT, NULL AS Volume, NULL AS bookID, NULL AS ISBN, NULL AS ISBNType, NULL AS PublisherHref, NULL AS School, NULL AS Series, NULL AS SeriesHref, NULL 
+                         AS incollectionID, NULL AS Chapter, NULL AS inproceedingsID, NULL AS masterID, NULL AS phdID, NULL AS proceedingsID, NULL AS Address, 'Blog' AS type
+FROM            Blog

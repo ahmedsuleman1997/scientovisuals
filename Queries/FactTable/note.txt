@@ -1,0 +1,6 @@
+the fact table was having the issue while doing LookUp because we were doing comparison of only those dateID and typeID 
+so we can fetch the record completely. 
+
+the formatting of Mdate was wrong due to which it was inserting NULL in DateID and TypeID so therefore we implemented a
+query which was given in the other file of this folder that formatted the date into the correct form and then we applied
+lookup operation for the sake of comparison.

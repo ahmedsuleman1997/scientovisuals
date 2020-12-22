@@ -1,0 +1,57 @@
+SELECT X.Year, X.Name, MAX(X.typeCount) AS Num_Publications 
+FROM
+(
+	SELECT D.Year, T.Name, COUNT(F.typeid) AS typeCount
+	FROM [DBLP].[dbo].[FactDBLP] AS F
+	INNER JOIN [DBLP].[dbo].[DimDate] AS D
+	ON F.DateId = D.Did
+	INNER JOIN [DBLP].[dbo].[DimType] AS T
+	ON F.typeid = T.Tid
+	WHERE D.Year > 2000 AND D.Year <= 2020
+	GROUP BY D.Year, T.Name
+) AS X
+GROUP BY X.Year, X.Name
+ORDER BY X.Year, X.Name
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+SELECT A.Year, B.Name, A.Num_Publications
+FROM
+(
+	SELECT X.Year, MAX(X.typeCount) AS Num_Publications
+	FROM
+	(
+		SELECT D.Year, T.Name, COUNT(F.typeid) AS typeCount
+		FROM [DBLP].[dbo].[FactDBLP] AS F
+		INNER JOIN [DBLP].[dbo].[DimDate] AS D
+		ON F.DateId = D.Did
+		INNER JOIN [DBLP].[dbo].[DimType] AS T
+		ON F.typeid = T.Tid
+		WHERE D.Year > 2000 AND D.Year <= 2020
+		GROUP BY D.Year, T.Name
+	) AS X
+	GROUP BY X.Year
+) AS A,
+(
+	SELECT D.Year, T.Name, COUNT(F.typeid) AS typeCount
+	FROM [DBLP].[dbo].[FactDBLP] AS F
+	INNER JOIN [DBLP].[dbo].[DimDate] AS D
+	ON F.DateId = D.Did
+	INNER JOIN [DBLP].[dbo].[DimType] AS T
+	ON F.typeid = T.Tid
+	WHERE D.Year > 2000 AND D.Year <= 2020
+	GROUP BY D.Year, T.Name
+) AS B
+WHERE A.Year = B.Year AND A.Num_Publications = B.typeCount
+ORDER BY A.Year
